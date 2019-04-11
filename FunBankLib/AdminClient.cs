@@ -17,7 +17,7 @@ namespace FunBankLib {
                 {"username", username },
                 {"password", password }
             });
-            SetAuthorization("Admin", me.Hash);
+            // httpClient.DefaultRequestHeaders.Add("Authorization", $"Admin {me.Hash}");
             return me;
         }
 
@@ -43,7 +43,6 @@ namespace FunBankLib {
         }
 
         public async Task<Models.Customer> CreateCustomer(Models.Customer customer) {
-            if(customer.Id != null) customer.Id = null;
             return await Post<Models.Customer>("/api/customer", customer);
         }
 

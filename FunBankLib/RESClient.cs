@@ -21,10 +21,13 @@ namespace FunBankLib
             this.baseUrl = new Uri(baseUrl);
             cookieContainer = new CookieContainer();
             httpClientHandler = new HttpClientHandler() {
-                CookieContainer = cookieContainer
+                CookieContainer = cookieContainer,
+                DefaultProxyCredentials = CredentialCache.DefaultCredentials,
+                Proxy = WebRequest.GetSystemWebProxy(),
+                UseProxy = true
             };
             httpClient = new HttpClient(httpClientHandler) {
-                BaseAddress = this.baseUrl
+                BaseAddress = this.baseUrl,
             };
         }
 
@@ -46,11 +49,13 @@ namespace FunBankLib
         }
 
         public async Task<T> ParseResponse<T>(HttpResponseMessage response) {
+            Console.WriteLine($"Got Response {response.StatusCode}: {await response.Content.ReadAsStringAsync()}");
             response.EnsureSuccessStatusCode();
             IEnumerable<string> values;
             if (response.Headers.TryGetValues("Content-Type", out values)) {
                 if (new List<string>(values).Contains("application/json")) {
-                    return DeserializeObject<T>(await response.Content.ReadAsStringAsync());
+                    var content = await response.Content.ReadAsStringAsync();
+                    return DeserializeObject<T>(content);
                 } else {
                     return default;
                 }
@@ -73,6 +78,7 @@ namespace FunBankLib
                 Path = path
             }.ToString();
             var content = new StringContent(SerializeObject(body), Encoding.UTF8, "application/json");
+            Console.WriteLine($"Posting {await content.ReadAsStringAsync()} to {address}");
             var response = await httpClient.PostAsync(address, content);
             return await ParseResponse<T>(response);
         }
