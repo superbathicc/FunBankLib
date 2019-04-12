@@ -25,7 +25,7 @@ namespace FunBankLib {
         }
 
         public async Task<List<Models.Customer>> GetCustomers() {
-            return await Get<List<Models.Customer>>("/api/customer", null)l
+            return await Get<List<Models.Customer>>("/api/customer", null);
         }
 
         public async Task<List<Models.Account>> GetAccounts(Models.Customer customer) {

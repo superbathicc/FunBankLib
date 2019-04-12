@@ -47,6 +47,8 @@
   <ItemGroup>
     <Compile Include="AccountClient.cs" />
     <Compile Include="AdminClient.cs" />
+    <Compile Include="ATMClient.cs" />
+    <Compile Include="CustomerClient.cs" />
     <Compile Include="Idle.cs" />
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\Admin.cs" />
@@ -54,6 +56,7 @@
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\Model.cs" />
+    <Compile Include="Models\Money.cs" />
     <Compile Include="Models\Transaction.cs" />
     <Compile Include="RESClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
