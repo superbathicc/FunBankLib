@@ -27,18 +27,20 @@ namespace FunBankLib {
                 {"amount", amount}
             });
         }
-        public async Task<Models.ATMInventory> Withdraw(Models.ATM atm, long amount)
+        public async Task<Models.ATMInventory> Withdraw(Models.Account account, Models.ATM atm, long amount)
         {
             return await Post<Models.ATMInventory>("/api/account/withdraw", new Dictionary<string, object>() {
+                {"accountHash", account.Hash },
                 {"atmId", atm.Id },
                 {"amount", amount }
             });
         }
 
-        public async Task<Models.Account> Deposit(Models.ATM atm, Models.ATMInventory inventory)
+        public async Task<Models.Account> Deposit(Models.Account account, Models.ATM atm, Models.ATMInventory inventory)
         {
             return await Post<Models.Account>("/api/account/deposit", new Dictionary<string, object>() {
-                {"atmId", atm.Id },
+                {"accountHash", account.Hash },
+                { "atmId", atm.Id },
                 {"items", inventory }
             });
         }
