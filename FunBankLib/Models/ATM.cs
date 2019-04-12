@@ -47,28 +47,28 @@ namespace FunBankLib.Models {
         [JsonProperty("50ct")]
         public int FifyCents { get; set; }
 
-        [JsonProperty("1€")]
+        [JsonProperty("1eur")]
         public int OneEuro { get; set; }
 
-        [JsonProperty("2€")]
+        [JsonProperty("2eur")]
         public int TwoEuro { get; set; }
 
-        [JsonProperty("5€")]
+        [JsonProperty("5eur")]
         public int FiveEuro { get; set; }
 
-        [JsonProperty("10€")]
+        [JsonProperty("10eur")]
         public int TenEuro { get; set; }
 
-        [JsonProperty("20€")]
+        [JsonProperty("20eur")]
         public int TwentyEuro { get; set; }
 
-        [JsonProperty("50€")]
+        [JsonProperty("50eur")]
         public int FiftyEuro { get; set; }
 
-        [JsonProperty("100€")]
+        [JsonProperty("100eur")]
         public int OneHundredEuro { get; set; }
 
-        [JsonProperty("200€")]
+        [JsonProperty("200eur")]
         public int TwoHundredEuro { get; set; }
     }
 }
