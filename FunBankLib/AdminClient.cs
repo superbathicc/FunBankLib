@@ -30,7 +30,7 @@ namespace FunBankLib {
 
         public async Task<Models.Account> CreateAccount(Models.Customer owner, string password) {
             return await Post<Models.Account>("/api/account", new Dictionary<string, object>() {
-                {"customer", owner.Username },
+                {"customerHash", owner.Hash },
                 {"password", password }
             });
         }

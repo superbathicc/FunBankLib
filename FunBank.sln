@@ -5,9 +5,11 @@ VisualStudioVersion = 16.0.28714.193
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunBankLib", "FunBankLib\FunBankLib.csproj", "{0B156064-0BC9-4A9E-B465-10D688544059}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunBankInit", "FunBankInit\FunBankInit.csproj", "{93D66D07-E14E-4D5C-8B4F-57D3859DEB4F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FunBankInit", "FunBankInit\FunBankInit.csproj", "{93D66D07-E14E-4D5C-8B4F-57D3859DEB4F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdminPanel", "AdminPanel\AdminPanel.csproj", "{9C6CEE99-E394-46EF-B309-E2D96806C0F4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdminControlPanel", "AdminControlPanel\AdminControlPanel.csproj", "{32AA4449-E403-4861-8311-5FC3F4E14DA7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Automat", "..\atm\Automat\Automat.csproj", "{56EC6EB1-EA20-488F-9756-E9E989B9BBE9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +25,14 @@ Global
 		{93D66D07-E14E-4D5C-8B4F-57D3859DEB4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{93D66D07-E14E-4D5C-8B4F-57D3859DEB4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{93D66D07-E14E-4D5C-8B4F-57D3859DEB4F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9C6CEE99-E394-46EF-B309-E2D96806C0F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9C6CEE99-E394-46EF-B309-E2D96806C0F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9C6CEE99-E394-46EF-B309-E2D96806C0F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9C6CEE99-E394-46EF-B309-E2D96806C0F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32AA4449-E403-4861-8311-5FC3F4E14DA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32AA4449-E403-4861-8311-5FC3F4E14DA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32AA4449-E403-4861-8311-5FC3F4E14DA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32AA4449-E403-4861-8311-5FC3F4E14DA7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56EC6EB1-EA20-488F-9756-E9E989B9BBE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56EC6EB1-EA20-488F-9756-E9E989B9BBE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56EC6EB1-EA20-488F-9756-E9E989B9BBE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56EC6EB1-EA20-488F-9756-E9E989B9BBE9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

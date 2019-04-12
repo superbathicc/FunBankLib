@@ -50,18 +50,15 @@ namespace FunBankLib
 
         public async Task<T> ParseResponse<T>(HttpResponseMessage response) {
             Console.WriteLine($"Got Response {response.StatusCode}: {await response.Content.ReadAsStringAsync()}");
-            response.EnsureSuccessStatusCode();
-            IEnumerable<string> values;
-            if (response.Headers.TryGetValues("Content-Type", out values)) {
-                if (new List<string>(values).Contains("application/json")) {
+            if (response.StatusCode == HttpStatusCode.OK || response.StatusCode == HttpStatusCode.Created) {
+                if (response.Content.Headers.ContentType.MediaType == "application/json") {
                     var content = await response.Content.ReadAsStringAsync();
-                    return DeserializeObject<T>(content);
+                    return JsonConvert.DeserializeObject<T>(content);
                 } else {
+                    Console.WriteLine("was not json");
                     return default;
                 }
-            } else {
-                return default;
-            }
+            } else throw new Exception($"got error response (${response.StatusCode}\n{await response.Content.ReadAsStringAsync()}");
         }
 
         public async Task<T> Get<T>(string path, Dictionary<string, string> query) {
@@ -77,18 +74,10 @@ namespace FunBankLib
             var address = new UriBuilder(httpClient.BaseAddress) {
                 Path = path
             }.ToString();
-            var content = new StringContent(SerializeObject(body), Encoding.UTF8, "application/json");
+            var content = new StringContent(JsonConvert.SerializeObject(body), Encoding.UTF8, "application/json");
             Console.WriteLine($"Posting {await content.ReadAsStringAsync()} to {address}");
             var response = await httpClient.PostAsync(address, content);
             return await ParseResponse<T>(response);
-        }
-
-        protected virtual string SerializeObject(object o) {
-            return JsonConvert.SerializeObject(o, Formatting.Indented);
-        }
-
-        protected virtual T DeserializeObject<T>(string json) {
-            return JsonConvert.DeserializeObject<T>(json);
         }
 
         protected void SetAuthorization(string key, string hash) {

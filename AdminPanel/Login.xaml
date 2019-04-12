@@ -1,0 +1,16 @@
+﻿<Window x:Class="AdminPanel.Login"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AdminPanel"
+        mc:Ignorable="d"
+        Title="Login" Height="450" Width="320">
+    <Grid>
+        <Label x:Name="Title" Content="Control Panel Login" Margin="10,0,10,372" VerticalAlignment="Bottom" FontSize="20" HorizontalContentAlignment="Center"/>
+        <Grid Height="189" Margin="10,107,10,123" VerticalAlignment="Center" RenderTransformOrigin="0.502,0.574">
+            <TextBox Height="23" Margin="10,41,10,0" TextWrapping="Wrap" Text="http://localhost" VerticalAlignment="Top"/>
+            <Label Content="Server" Margin="10,10,10,0" VerticalAlignment="Top"/>
+        </Grid>
+    </Grid>
+</Window>

@@ -7,8 +7,15 @@ using FunBankLib;
 
 namespace FunBankInit {
     class Program {
+        static ManualResetEvent manualResetEvent = new ManualResetEvent(false);
+
         static void Main(string[] args) {
+
             GetBaseUrl();
+            manualResetEvent.WaitOne();
+            Console.CancelKeyPress += delegate {
+                manualResetEvent.Set();
+            };
         }
 
         static void GetBaseUrl() {
@@ -21,11 +28,8 @@ namespace FunBankInit {
                     Console.WriteLine("Login as Admin:");
                     adminClient.Login(new Prompt("Username:").Execute(), new Prompt("Password:").Execute()).Wait();
                     CreateCustomer(adminClient);
-                    CreateATM(adminClient);
                 } catch (UriFormatException) {
                     e.invalid = true;
-                } catch (Exception ex) {
-                    Console.WriteLine($"{ex.GetType().Name} occured and I could not care less\n{ex.StackTrace}");
                 }
             };
             baseUrlPrompt.Execute();
@@ -35,32 +39,32 @@ namespace FunBankInit {
             Prompt createCustomerPrompt = new Prompt("Create a new customer?", new string[] { "Y", "n" });
             createCustomerPrompt.Answered += (sender, e) => {
                 if (e.answer.Equals("Y")) {
-                    var task = InputCustomerDataAndCreate(adminClient);
-                    task.Wait();
-                    CreateAccounts(adminClient, task.Result);
+                    new Task(async () => {
+                        var customer = await adminClient.CreateCustomer(new FunBankLib.Models.Customer() {
+                            Id = null,
+                            Hash = null,
+                            Username = new Prompt("Username:").Execute(),
+                            PasswordHash = new Prompt("Password:").Execute(),
+                            Name = new FunBankLib.Models.CustomerName() {
+                                First = new Prompt("First Name:").Execute(),
+                                Last = new Prompt("Last Name:").Execute()
+                            },
+                            Address = new FunBankLib.Models.CustomerAddress() {
+                                Country = new Prompt("Country: ").Execute(),
+                                Postcode = new Prompt("Postcode:").Execute(),
+                                City = new Prompt("City:").Execute(),
+                                Street = new Prompt("Street:").Execute(),
+                                HouseNumber = new Prompt("House Number:").Execute()
+                            }
+                        });
+
+                        CreateAccounts(adminClient, customer);
+                    }).Start();
+                } else {
+                    CreateEmployee(adminClient);
                 }
             };
             createCustomerPrompt.Execute();
-        }
-
-        static async Task<FunBankLib.Models.Customer> InputCustomerDataAndCreate(AdminClient adminClient) {
-            return await adminClient.CreateCustomer(new FunBankLib.Models.Customer() {
-                Id = null,
-                Hash = null,
-                Username = new Prompt("Username:").Execute(),
-                PasswordHash = new Prompt("Password:").Execute(),
-                Name = new FunBankLib.Models.CustomerName() {
-                    First = new Prompt("First Name:").Execute(),
-                    Last = new Prompt("Last Name:").Execute()
-                },
-                Address = new FunBankLib.Models.CustomerAddress() {
-                    Country = new Prompt("Country: ").Execute(),
-                    Postcode = new Prompt("Postcode:").Execute(),
-                    City = new Prompt("City:").Execute(),
-                    Street = new Prompt("Street:").Execute(),
-                    HouseNumber = new Prompt("House Number:").Execute()
-                }
-            });
         }
 
         static void CreateAccounts(AdminClient adminClient, FunBankLib.Models.Customer customer) {
@@ -71,15 +75,53 @@ namespace FunBankInit {
                         var account = await adminClient.CreateAccount(customer, new Prompt("Enter a new Password:").Execute());
 
                         createAccountPrompt.Execute();
-                    });
+                    }).Start();
                 } else {
-                    
+                    CreateEmployee(adminClient);
                 }
             };
+            createAccountPrompt.Execute();
         }
 
         static void CreateATM(AdminClient adminClient) {
+            Prompt createATMPrompt = new Prompt($"Create a new ATM?", new string[] { "Y", "n" });
+            createATMPrompt.Answered += (sender, e) => {
+                if (e.answer == "Y") {
+                    new Task(async () => {
+                        var atm = await adminClient.CreateATM(new Prompt("enter a password:").Execute(), new Prompt("description:").Execute());
 
+                        createATMPrompt.Execute();
+                    }).Start();
+                } else {
+                    manualResetEvent.Set();
+                }
+            };
+            createATMPrompt.Execute();
+        }
+
+        static void CreateEmployee(AdminClient adminClient) {
+            Prompt createEmployeePrompt = new Prompt($"Create new employee?", new string[] { "Y", "n" });
+            createEmployeePrompt.Answered += (sender, e) => {
+                if (e.answer == "Y") {
+                    new Task(async () => {
+                        var employee = await adminClient.CreateEmployee(new FunBankLib.Models.Employee() {
+                            Id = null,
+                            Hash = null,
+                            Username = new Prompt("username:").Execute(),
+                            Name = new FunBankLib.Models.EmployeeName() {
+                                First = new Prompt("first name:").Execute(),
+                                Last = new Prompt("last name:").Execute()
+                            },
+                            PasswordHash = new Prompt("password:").Execute()
+                        });
+
+                        createEmployeePrompt.Execute();
+                    }).Start();
+                } else {
+                    CreateATM(adminClient);
+                }
+            };
+            createEmployeePrompt.Execute();
         }
     }
 

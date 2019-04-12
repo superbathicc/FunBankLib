@@ -22,6 +22,7 @@ namespace FunBankLib.Models {
         [JsonProperty("dateOfBirth")]
         public long DateOfBirthMS { get; set; }
 
+        [JsonIgnore()]
         public DateTime DateOfBirth {
             get {
                 return new DateTime(1970, 1, 1).AddMilliseconds(Convert.ToDouble(DateOfBirthMS));
