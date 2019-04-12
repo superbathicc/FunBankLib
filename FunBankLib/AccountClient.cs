@@ -5,16 +5,16 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace FunBankLib {
-    class AccountClient : RESTClient {
+    public class AccountClient : RESTClient {
         private Models.Account me;
 
         public AccountClient(string baseUrl) : base(baseUrl) {
 
         }
 
-        public async Task<Models.Account> Login(string username, string password) {
+        public async Task<Models.Account> Login(string accountId, string password) {
             me = await Post<Models.Account>("/api/login/account", new Dictionary<string, object>() {
-                {"username", username },
+                {"accountId", accountId },
                 {"password", password }
             });
             SetAuthorization("Account", me.Hash);
@@ -27,5 +27,21 @@ namespace FunBankLib {
                 {"amount", amount}
             });
         }
+        public async Task<Models.ATMInventory> Withdraw(Models.ATM atm, long amount)
+        {
+            return await Post<Models.ATMInventory>("/api/account/withdraw", new Dictionary<string, object>() {
+                {"atmId", atm.Id },
+                {"amount", amount }
+            });
+        }
+
+        public async Task<Models.Account> Deposit(Models.ATM atm, Models.ATMInventory inventory)
+        {
+            return await Post<Models.Account>("/api/account/deposit", new Dictionary<string, object>() {
+                {"atmId", atm.Id },
+                {"items", inventory }
+            });
+        }
     }
+
 }

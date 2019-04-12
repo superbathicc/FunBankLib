@@ -14,7 +14,7 @@ namespace FunBankLib.Models {
         public string PasswordHash { get; set; }
 
         [JsonProperty("balance", Required = Required.Always)]
-        public float Balance { get; set; }
+        public long Balance { get; set; }
 
         [JsonProperty("hash", Required = Required.Default)]
         public string Hash { get; set; }

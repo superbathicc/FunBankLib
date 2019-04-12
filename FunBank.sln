@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FunBankInit", "FunBankInit\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdminControlPanel", "AdminControlPanel\AdminControlPanel.csproj", "{32AA4449-E403-4861-8311-5FC3F4E14DA7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Automat", "..\atm\Automat\Automat.csproj", "{56EC6EB1-EA20-488F-9756-E9E989B9BBE9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Automat", "..\Automat\Automat\Automat.csproj", "{56EC6EB1-EA20-488F-9756-E9E989B9BBE9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

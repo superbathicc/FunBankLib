@@ -15,7 +15,7 @@ namespace FunBankLib {
         public async Task<Models.ATM> Login(string id, string password) {
             me = await Post<Models.ATM>("/api/login/atm", new Dictionary<string, object>() {
                 {"id", id },
-                {"password", id }
+                {"password", password }
             });
             return me;
         }
